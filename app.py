@@ -8,8 +8,6 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-VERIFY_TOKEN = 'HiAvi'
-PAGE_ACCESS_TOKEN = 'EAAT0bXxJkVQBAAN97N3sbFtHOPzJSZBTXgMyXy0ufmHVluh5DBGUMZCySA8Lt4cMecpP6rbe87E4H9o6m3NGifpA6Svox7eBZCLBIlWfaqKD846rj5TfTk52x3o3cgQXg1KYZCKLhBXZCkMQvpgWsNvWPfPW6aNoBXTr3lWfwXygV49DNhNGS'
 
 @app.route('/', methods=['GET'])
 def verify():
