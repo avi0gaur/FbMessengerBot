@@ -3,7 +3,11 @@ import json
 import requests
 from flask import Flask, request
 
+from chat_bot import CrmnextChatBot
+
 app = Flask(__name__)
+
+bot = CrmnextChatBot()
 
 @app.route('/', methods=['POST'])
 def fb_webhook():
@@ -18,7 +22,10 @@ def fb_webhook():
                 if msg.get("message"):
                     sender_id = msg["sender"]["id"]
                     message_text = msg["message"]["text"]
-                    send_message(sender_id, "I am saying "+message_text)
+                    data = {'userId': '123', "intent_type": '', "user_text": message_text, 'user_name': 'Avinash Gaur',
+                                      'contactNumber': '89892398128', 'cardCount': 2, 'user_stage': 0, 're_connect': True}
+                    res = bot.run_bot(data)
+                    send_message(sender_id, res['response_text'])
 
     return "ok", 200
 
