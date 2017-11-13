@@ -9,6 +9,17 @@ app = Flask(__name__)
 
 bot = CrmnextChatBot()
 
+app = Flask(__name__, static_url_path='')
+
+
+@app.route('/privacypolicy')
+def privacypolicy():
+    return app.send_static_file('privacypolicy.html')
+
+@app.route('/termofservice')
+def termofservice():
+    return app.send_static_file('termofservice.html')
+
 @app.route('/', methods=['POST'])
 def fb_webhook():
     """
