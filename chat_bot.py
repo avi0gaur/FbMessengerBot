@@ -185,23 +185,23 @@ class CrmnextChatBot:
 
 
 
-bot = CrmnextChatBot()
-user_stage = 0
-intent = ''
+# bot = CrmnextChatBot()
+# user_stage = 0
+# intent = ''
 # print(bot.clean_text("Hi I am #avinash ?  "))
-while True:
-
-    text = input("Enter text: ")
-    reconnect = input('re-connect: ')
-    print(bool(reconnect))
-    data = {'userId': '123', "intent_type":intent, "user_text": text, 'user_name': 'Avinash Gaur',
-            'contactNumber': '89892398128', 'cardCount': 2, 'user_stage': user_stage, 're_connect': bool(reconnect)}
-    print(data)
-    print(user_stage)
-    print(intent)
-    d = bot.run_bot(data)
-    intent = d['user_intent']
-    user_stage = d['user_stage']
-
-
-    print(d)
+# while True:
+#
+#     text = input("Enter text: ")
+#     reconnect = input('re-connect: ')
+#     print(bool(reconnect))
+#     data = {'userId': '123', "intent_type":intent, "user_text": text, 'user_name': 'Avinash Gaur',
+#             'contactNumber': '89892398128', 'cardCount': 2, 'user_stage': user_stage, 're_connect': bool(reconnect)}
+#     print(data)
+#     print(user_stage)
+#     print(intent)
+#     d = bot.run_bot(data)
+#     intent = d['user_intent']
+#     user_stage = d['user_stage']
+#
+#
+#     print(d)
