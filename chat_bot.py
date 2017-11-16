@@ -97,7 +97,7 @@ class CrmnextChatBot:
 
         self.bot.log_debug("User Data: {}".format(ud))
         p_data = corpus[ud['intent_type']][ud['user_stage']]
-        user_txt = self.clean_text(ud['user_text'])
+        user_txt = ud['user_text']
         if user_txt in p_data.keys():
             response['response_text'] = random.choice(p_data[user_txt])
             response['card_type'] = ""
