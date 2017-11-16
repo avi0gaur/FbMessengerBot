@@ -11,7 +11,7 @@ class BotLogger:
         """
         f = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         try:
-            logging.basicConfig(filename='../logs/chatbot.log', level=logging.DEBUG,format=f)
+            logging.basicConfig(filename='logs/chatbot.log', level=logging.DEBUG,format=f)
         except OSError as err:
             print("OS error: {0}".format(err))
         self.log = logging.getLogger("bot_logs")
