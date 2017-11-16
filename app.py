@@ -11,10 +11,12 @@ bot = CrmnextChatBot()
 
 app = Flask(__name__, static_url_path='')
 
-user_stage = 0
-intent = ''
-reconnect = True
+class ui():
+    user_stage = 0
+    intent = ''
+    reconnect = True
 
+ui = ui()
 @app.route('/privacypolicy')
 def privacypolicy():
     return app.send_static_file('privacypolicy.html')
@@ -36,15 +38,15 @@ def fb_webhook():
                 if msg.get("message"):
                     sender_id = msg["sender"]["id"]
                     message_text = msg["message"]["text"]
-                    data = {'userId': '123', "intent_type": intent, "user_text": message_text, 'user_name': 'Avinash Gaur',
-                                      'contactNumber': '89892398128', 'cardCount': 2, 'user_stage': user_stage, 're_connect': reconnect}
+                    data = {'userId': '123', "intent_type": ui.intent, "user_text": message_text, 'user_name': 'Avinash Gaur',
+                                      'contactNumber': '89892398128', 'cardCount': 2, 'user_stage': ui.user_stage, 're_connect': ui.reconnect}
                     res = bot.run_bot(data)
-                    user_stage = res['user_stage']
+                    ui.user_stage = res['user_stage']
                     intent = res['user_intent']
                     if intent is not '':
-                        reconnect = False
+                        ui.reconnect = False
                     else:
-                        reconnect = True
+                        ui.reconnect = True
                     send_message(sender_id, res['response_text'])
 
     return "ok", 200
