@@ -4,19 +4,22 @@ import requests
 from flask import Flask, request
 
 from chat_bot import CrmnextChatBot
+from storeState import state_mdb
+
+user_db = state_mdb()
 
 app = Flask(__name__)
 
 bot = CrmnextChatBot()
 
+user_state = {
+    "intent_type": "", "user_text": "", 'user_stage': 0
+}
+
+user_db = user_db.insert_user_state(user_state)
 app = Flask(__name__, static_url_path='')
 
-class ui():
-    user_stage = 0
-    intent = ''
-    reconnect = True
 
-ui = ui()
 @app.route('/privacypolicy')
 def privacypolicy():
     return app.send_static_file('privacypolicy.html')
@@ -38,15 +41,10 @@ def fb_webhook():
                 if msg.get("message"):
                     sender_id = msg["sender"]["id"]
                     message_text = msg["message"]["text"]
-                    data = {'userId': '123', "intent_type": ui.intent, "user_text": message_text, 'user_name': 'Avinash Gaur',
-                                      'contactNumber': '89892398128', 'cardCount': 2, 'user_stage': ui.user_stage, 're_connect': ui.reconnect}
-                    res = bot.run_bot(data)
-                    ui.user_stage = res['user_stage']
-                    intent = res['user_intent']
-                    if intent is not '':
-                        ui.reconnect = False
-                    else:
-                        ui.reconnect = True
+                    update_user_data(sender_id)
+                    user_state = get_user_state(sender_id)
+                    user_state["user_text"] = message_text
+                    res = bot.run_bot(user_state)
                     send_message(sender_id, res['response_text'])
 
     return "ok", 200
@@ -86,6 +84,11 @@ def send_message(recipient_id, message_text):
     })
     response = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 
+def get_user_state(id):
+    return user_db.get_user_state(id)
+
+def update_user_data(id):
+    return user_db.update_user_stage("id", id, user_state)
 
 if __name__ == '__main__':
     app.run(debug=True)

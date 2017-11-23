@@ -52,7 +52,7 @@ class CrmnextChatBot:
         """
         self.bot.log_debug("Received Json in run_bot: {}".format(conv))
         msg = conv["user_text"]
-        isFirst = conv["re_connect"]
+        isFirst = True if conv["intent_type"] == "" else False
 
         if self.sent(msg):
             if isFirst:
