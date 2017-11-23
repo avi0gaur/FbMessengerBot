@@ -13,7 +13,7 @@ app = Flask(__name__)
 bot = CrmnextChatBot()
 
 user_state = {
-    "intent_type": "", "user_text": "", 'user_stage': 0
+    "id": "", "intent_type": "", "user_text": "", 'user_stage': 0
 }
 
 user_db = user_db.insert_user_state(user_state)
@@ -88,6 +88,7 @@ def get_user_state(id):
     return user_db.get_user_state(id)
 
 def update_user_data(id):
+    user_state["id"] = id
     return user_db.update_user_stage("id", id, user_state)
 
 if __name__ == '__main__':
