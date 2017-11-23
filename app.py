@@ -38,10 +38,11 @@ def fb_webhook():
                 if msg.get("message"):
                     sender_id = msg["sender"]["id"]
                     message_text = msg["message"]["text"]
+                    update_user_data(sender_id)
                     user_state = get_user_state(sender_id)
                     user_state["user_text"] = message_text
                     res = bot.run_bot(user_state)
-                    upd_state(id, res)
+                    upd_state(sender_id, res)
                     send_message(sender_id, res['response_text'])
 
     return "ok", 200
