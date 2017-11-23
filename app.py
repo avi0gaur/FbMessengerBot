@@ -5,18 +5,15 @@ from flask import Flask, request
 
 from chat_bot import CrmnextChatBot
 from storeState import state_mdb
+from user_data import UserStateData
 
 user_db = state_mdb()
-
+user_data = UserStateData()
+user_state = user_data.data
 app = Flask(__name__)
 
 bot = CrmnextChatBot()
 
-user_state = {
-    "id": "", "intent_type": "", "user_text": "", 'user_stage': 0
-}
-
-user_db = user_db.insert_user_state(user_state)
 app = Flask(__name__, static_url_path='')
 
 
@@ -41,10 +38,10 @@ def fb_webhook():
                 if msg.get("message"):
                     sender_id = msg["sender"]["id"]
                     message_text = msg["message"]["text"]
-                    update_user_data(sender_id)
                     user_state = get_user_state(sender_id)
                     user_state["user_text"] = message_text
                     res = bot.run_bot(user_state)
+                    upd_state(id, res)
                     send_message(sender_id, res['response_text'])
 
     return "ok", 200
@@ -90,6 +87,10 @@ def get_user_state(id):
 def update_user_data(id):
     user_state["id"] = id
     return user_db.update_user_stage("id", id, user_state)
+def upd_state(id, res):
+    user_state["intent_type"] = res["user_intent"]
+    user_state["user_stage"] = res["user_stage"]
+    update_user_data(id)
 
 if __name__ == '__main__':
     app.run(debug=True)
