@@ -55,7 +55,7 @@ class state_mdb:
         :return:
         """
         try:
-          cr = self.db.user_stage.distinct(id)
+          cr = self.db.user_stage.find({"id":id})
         except Exception as e:
             log.log_error(e)
         return cr
