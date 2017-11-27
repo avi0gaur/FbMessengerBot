@@ -68,7 +68,8 @@ class state_mdb:
         :return:
         """
         try:
-            self.db.user_stage.update(
+            print("key:value:data"+key+" : "+value+" : "+data)
+            self.db.user_stage.replace(
                 {
                     key: value
                 }, {'$set': data
