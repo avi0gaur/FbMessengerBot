@@ -71,9 +71,8 @@ class state_mdb:
             self.db.user_stage.update(
                 {
                     key: value
-                }, data,
-                {"upsert": "true"}
-            )
+                }, {'$set': data
+            }, upsert=True)
         except Exception as e:
             print(e)
         print("\nRecords updated successfully\n")
