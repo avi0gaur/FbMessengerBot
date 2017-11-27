@@ -42,7 +42,6 @@ def fb_webhook():
                     update_user_data(sender_id)
                     u_data = get_user_state(sender_id)
                     print("user_state:" + str(u_data))
-
                     u_data["user_text"] = message_text
                     res = bot.run_bot(u_data)
                     upd_state(sender_id, res)
