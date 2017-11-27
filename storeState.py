@@ -72,7 +72,7 @@ class state_mdb:
                 {
                     key: value
                 }, data,
-                {upsert: true}
+                {"upsert": "true"}
             )
         except Exception as e:
             print(e)

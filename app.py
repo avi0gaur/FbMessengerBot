@@ -6,6 +6,7 @@ from flask import Flask, request
 from chat_bot import CrmnextChatBot
 from storeState import state_mdb
 from user_data import UserStateData
+import json
 
 user_db = state_mdb()
 user_data = UserStateData()
@@ -40,6 +41,8 @@ def fb_webhook():
                     message_text = msg["message"]["text"]
                     update_user_data(sender_id)
                     user_state = get_user_state(sender_id)
+                    print("user_state:" + user_state)
+
                     user_state["user_text"] = message_text
                     res = bot.run_bot(user_state)
                     upd_state(sender_id, res)
