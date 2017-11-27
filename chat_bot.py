@@ -151,8 +151,7 @@ class CrmnextChatBot:
         :return:
         """
         neg_data = cr_data["neg_sent"][0]
-        return dict(userId=conv["userId"], user_intent="", response_text=random.choice(neg_data["response"]),
-                    card_type=neg_data["card_type"],user_stage=0)
+        return dict(user_intent="", response_text=random.choice(neg_data["response"]),user_stage=0)
 
     def sent(self, conv):
         """
@@ -162,7 +161,7 @@ class CrmnextChatBot:
         """
         t = TextBlob(conv)
         vs = self.senti.polarity_scores(conv)
-        return False if t.polarity < - 0.2 else True
+        return False if t.polarity < - 0.3 else True
 
     def clean_text(self, statement):
         """
