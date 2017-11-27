@@ -103,6 +103,7 @@ class CrmnextChatBot:
             response['card_type'] = ""
 
         elif user_txt in p_data['user_text']:
+            print("p_data: >>" + str(p_data))
             response = self.update_res(response, p_data)
 
         elif user_txt == 'quit':
@@ -125,7 +126,7 @@ class CrmnextChatBot:
                 response['recommendation'] = self.cr.all_skills
             else:
                 response['recommendation'] = p_data['recommendation']
-
+        print("response: "+str(response))
         return response
 
     def update_res(self, response, p_data):
