@@ -10,7 +10,7 @@ import json
 
 user_db = state_mdb()
 user_data = UserStateData()
-user_state = user_data.data
+# user_state = user_data.data
 app = Flask(__name__)
 
 bot = CrmnextChatBot()
@@ -39,14 +39,17 @@ def fb_webhook():
                 if msg.get("message"):
                     sender_id = msg["sender"]["id"]
                     message_text = msg["message"]["text"]
-                    user_state['id'] = sender_id
-                    print("Inside post request: "+ str(user_state))
-                    update_user_data(sender_id, user_state)
-                    u_data = get_user_state(sender_id)
+                    u_data = get_user_state()
+                    u_state = ''
+                    if sender_id in u_data.keys():
+                        u_state = u_data[sender_id]
+                    else:
+                        u_state = u_data[0]
+
                     print("user_state:" + str(u_data))
-                    u_data["user_text"] = message_text
-                    res = bot.run_bot(u_data)
-                    upd_state(sender_id, res)
+                    u_state["user_text"] = message_text
+                    res = bot.run_bot(u_state)
+                    upd_state(sender_id, res, u_data)
                     send_message(sender_id, res['response_text'])
 
     return "ok", 200
@@ -87,18 +90,26 @@ def send_message(recipient_id, message_text):
     response = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 
 def get_user_state(id):
-    return user_db.get_user_state(id)
 
-def update_user_data(id, us):
-    us["id"] = id
-    print("update_user_data: "+ str(user_state))
-    return user_db.update_user_stage("id", id, user_state)
-def upd_state(id, res):
-    user_state["intent_type"] = res["user_intent"]
-    user_state["user_stage"] = res["user_stage"]
-    user_state["user_text"] = res["response_text"]
-    print(" inside upd_state: "+ str(user_state))
-    update_user_data(id, user_state)
+    return user_db.get_user_state("user_data")[0]
+
+def update_user_data(us):
+
+    return user_db.insert_user_state(us)
+
+def upd_state(id, res, last_state):
+
+    user_state = {"user_data": {id: {"intent_type": "", "user_text": "", "user_stage": 0, "card_type": ""}}}
+    user_state[id]["intent_type"] = res["user_intent"]
+    user_state[id]["user_stage"] = res["user_stage"]
+    user_state[id]["user_text"] = res["response_text"]
+    print("update_user_data: " + str(user_state))
+    if id in last_state.keys():
+        last_state[id] = user_state[id]
+        update_user_data(last_state)
+    else:
+        updated = last_state[id].update(user_state[id])
+        update_user_data(updated)
 
 if __name__ == '__main__':
     app.run(debug=True)

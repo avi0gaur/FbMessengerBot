@@ -25,6 +25,7 @@ class state_mdb:
         :return:
         """
         try:
+            self.delete_col()
             self.db.user_state.insert_one(
                 cr
                )
@@ -32,32 +33,22 @@ class state_mdb:
         except Exception as e:
             log.log_error(e)
 
+    def delete_col(self):
+        try:
+            self.db.user_state.delete_many({})
+        except Exception as e:
+            print(e)
 
-
-    def get_corpus(self, k):
+    def get_user_state(self, k):
         """
-        Def to search based on uuid or session id of user for that instance.
-        Take care we are searching for updating state of user based on current conversation.
-        :param cr:
+        Def to load bot corpus from db
+        :param k, db:
         :return:
         """
         try:
-          cr = self.db.chat_corpus.distinct(k)
+            cr = self.db.user_state.distinct(k)
         except Exception as e:
-            log.log_error(e)
-        return cr
-
-    def get_user_state(self, id):
-        """
-        Def to search based on uuid or session id of user for that instance.
-        Take care we are searching for updating state of user based on current conversation.
-        :param cr:
-        :return:
-        """
-        try:
-          cr = self.db.user_stage.find({"id":{'$exists':id}})[0]
-        except Exception as e:
-            log.log_error(e)
+            print(e)
         return cr
 
     def update_user_stage(self, key, value, data):
