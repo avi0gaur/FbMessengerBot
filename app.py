@@ -40,7 +40,7 @@ def fb_webhook():
                     sender_id = msg["sender"]["id"]
                     message_text = msg["message"]["text"]
                     user_state['id'] = sender_id
-                    print("Inside post request: "+ user_state)
+                    print("Inside post request: "+ str(user_state))
                     update_user_data(sender_id, user_state)
                     u_data = get_user_state(sender_id)
                     print("user_state:" + str(u_data))
