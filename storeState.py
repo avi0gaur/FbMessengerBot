@@ -69,7 +69,7 @@ class state_mdb:
         """
         try:
             print("update_user_stage: >>"+data)
-            self.db.user_stage.replace(
+            self.db.user_stage.update_one(
                 {
                     key: value
                 }, {'$set': data

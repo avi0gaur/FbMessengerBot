@@ -87,13 +87,16 @@ def send_message(recipient_id, message_text):
 def get_user_state(id):
     return user_db.get_user_state(id)
 
-def update_user_data(id):
-    user_state["id"] = id
+def update_user_data(id, us):
+    us["id"] = id
+    print("update_user_data: "+ str(user_state))
     return user_db.update_user_stage("id", id, str(user_state))
 def upd_state(id, res):
     user_state["intent_type"] = res["user_intent"]
     user_state["user_stage"] = res["user_stage"]
-    update_user_data(id)
+    user_state["user_text"] = res["response_text"]
+    print(" inside upd_state: "+ str(user_state))
+    update_user_data(id, user_state)
 
 if __name__ == '__main__':
     app.run(debug=True)
