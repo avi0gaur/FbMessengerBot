@@ -14,6 +14,6 @@ class UserStateData():
 
 
     def updatedb(self):
-        print("Inside UpdatedB: "+ self.data)
+        print("Inside UpdatedB: "+ str(self.data))
         self.db.insert_user_state(self.data)
 
