@@ -3,7 +3,7 @@ from storeState import state_mdb
 class UserStateData():
 
     def __init__(self):
-        self.data = {"user_data":{"id":{ "intent_type": "",
+        self.data = {"user_data":{"0":{ "intent_type": "",
               "user_text": "", "user_stage": 0, "card_type":""
     }
 
