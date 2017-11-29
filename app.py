@@ -40,13 +40,14 @@ def fb_webhook():
                     sender_id = msg["sender"]["id"]
                     message_text = msg["message"]["text"]
                     u_data = get_user_state()
+                    print("user_state:" + str(u_data))
                     u_state = ''
                     if sender_id in u_data.keys():
                         u_state = u_data[sender_id]
                     else:
                         u_state = u_data[0]
 
-                    print("user_state:" + str(u_data))
+
                     u_state["user_text"] = message_text
                     res = bot.run_bot(u_state)
                     upd_state(sender_id, res, u_data)
@@ -89,7 +90,7 @@ def send_message(recipient_id, message_text):
     })
     response = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 
-def get_user_state(id):
+def get_user_state():
 
     return user_db.get_user_state("user_data")[0]
 
