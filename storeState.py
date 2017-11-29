@@ -47,6 +47,7 @@ class state_mdb:
         """
         try:
             cr = self.db.user_state.distinct(k)
+            print("Inside get_User_state: " + str(cr))
         except Exception as e:
             print(e)
         return cr
@@ -60,7 +61,7 @@ class state_mdb:
         """
         try:
             print("update_user_stage: >>"+data)
-            self.db.user_stage.update_one(
+            self.db.user_state.update_one(
                 {
                     key: value
                 }, {'$set': data
