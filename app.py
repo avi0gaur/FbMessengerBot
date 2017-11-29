@@ -101,6 +101,7 @@ def update_user_data(us):
 def upd_state(id, res, last_state):
 
     user_state = {"user_data": {id: {"intent_type": "", "user_text": "", "user_stage": 0, "card_type": ""}}}
+    user_state = user_state["user_data"]
     user_state[id]["intent_type"] = res["user_intent"]
     user_state[id]["user_stage"] = res["user_stage"]
     user_state[id]["user_text"] = res["response_text"]
