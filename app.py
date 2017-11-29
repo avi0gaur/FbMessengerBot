@@ -45,7 +45,7 @@ def fb_webhook():
                     if sender_id in u_data.keys():
                         u_state = u_data[sender_id]
                     else:
-                        u_state = u_data[0]
+                        u_state = u_data["0"]
 
 
                     u_state["user_text"] = message_text
