@@ -25,6 +25,7 @@ class state_mdb:
         :return:
         """
         try:
+            self.delete_col()
             self.db.user_state.insert_one(
                 cr
                )

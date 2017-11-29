@@ -26,7 +26,7 @@ def privacypolicy():
 def termofservice():
     return app.send_static_file('termofservice.html')
 
-@app.route('/', methods=['POST'])
+# @app.route('/', methods=['POST'])
 def fb_webhook():
     """
     To get data from  the user and reponse back
@@ -37,21 +37,20 @@ def fb_webhook():
         for entry in data["entry"]:
             for msg in entry["messaging"]:
                 if msg.get("message"):
-                    sender_id = msg["sender"]["id"]
-                    message_text = msg["message"]["text"]
-                    u_data = get_user_state()
-                    print("user_state:" + str(u_data))
-                    u_state = ''
-                    if sender_id in u_data.keys():
-                        u_state = u_data[sender_id]
-                    else:
-                        u_state = u_data["0"]
+                        sender_id = msg["sender"]["id"]
+                        message_text = msg["message"]["text"]
+                        u_data = get_user_state()
+                        print("user_state:" + str(u_data))
+                        u_state = ''
+                        if sender_id in u_data.keys():
+                            u_state = u_data[sender_id]
+                        else:
+                            u_state = u_data["0"]
 
-
-                    u_state["user_text"] = message_text
-                    res = bot.run_bot(u_state)
-                    upd_state(sender_id, res, u_data)
-                    send_message(sender_id, res['response_text'])
+                        u_state["user_text"] = message_text
+                        res = bot.run_bot(u_state)
+                        upd_state(sender_id, res, u_data)
+                        send_message(sender_id, res['response_text'])
 
     return "ok", 200
 
@@ -105,13 +104,16 @@ def upd_state(id, res, last_state):
     user_state[id]["intent_type"] = res["user_intent"]
     user_state[id]["user_stage"] = res["user_stage"]
     user_state[id]["user_text"] = res["response_text"]
+    user_state[id]["card_type"] = res["card_type"]
     print("update_user_data: " + str(user_state))
     if id in last_state.keys():
         last_state[id] = user_state[id]
-        update_user_data(last_state)
+        update_user_data({"user_data":last_state})
     else:
-        updated = last_state.update(user_state[id])
-        update_user_data(updated)
+        last_state.update(user_state)
+        print("update data :" + str(last_state))
+        update_user_data({"user_data":[last_state]})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    fb_webhook()
