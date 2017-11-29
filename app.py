@@ -110,7 +110,7 @@ def upd_state(id, res, last_state):
         last_state[id] = user_state[id]
         update_user_data(last_state)
     else:
-        updated = last_state[id].update(user_state[id])
+        updated = last_state.update(user_state[id])
         update_user_data(updated)
 
 if __name__ == '__main__':
