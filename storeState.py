@@ -25,10 +25,10 @@ class state_mdb:
         :return:
         """
         try:
-            self.delete_col()
             self.db.user_state.insert_one(
                 cr
                )
+            print("Inside insert_user_state "+ str(cr))
             print('\nInserted data successfully\n')
         except Exception as e:
             log.log_error(e)
