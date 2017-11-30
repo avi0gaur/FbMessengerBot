@@ -26,7 +26,7 @@ def privacypolicy():
 def termofservice():
     return app.send_static_file('termofservice.html')
 
-# @app.route('/', methods=['POST'])
+@app.route('/', methods=['POST'])
 def fb_webhook():
     """
     To get data from  the user and reponse back
