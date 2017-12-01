@@ -46,6 +46,8 @@ def fb_webhook():
                         u_state = ''
                         if sender_id in u_data.keys():
                             u_state = u_data[sender_id]
+                            if u_state["user_stage"] == 0:
+                                u_state["intent_type"] = ""
                         else:
                             u_state = u_data["0"]
 
