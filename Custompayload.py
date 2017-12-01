@@ -9,16 +9,17 @@ class CustomPayload:
         pass
 
     def quick_reply(self,senderId, res):
-        botRes = res["response_text"]
-        listOfReply = res["recommendation"]
+        botRes ="Avi hi" #res["response_text"]
+        listOfReply = res #res["recommendation"]
         quickReply = []
 
-        temp = {
-                    "content_type": "text",
-                    "title": "",
-                    "payload": ""
-                }
+
         for qrly in listOfReply:
+            temp = {
+                "content_type": "text",
+                "title": "",
+                "payload": ""
+            }
             temp["title"] = qrly
             temp["payload"] = qrly
             quickReply.append(temp)
@@ -64,5 +65,6 @@ class CustomPayload:
 
 
 p = CustomPayload()
-def send_message(senderId, res):
-    return p.payloadManager(senderId, res)
+# def send_message(senderId, res):
+#     return p.payloadManager(senderId, res)
+p.quick_reply("1233", ["I want to appply for", "I need to apply for"])
