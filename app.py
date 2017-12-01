@@ -6,7 +6,7 @@ from flask import Flask, request
 from chat_bot import CrmnextChatBot
 from storeState import state_mdb
 from user_data import UserStateData
-import Custompayload import send_message
+from Custompayload import send_message
 from skills_api import authenticate_user
 import json
 
