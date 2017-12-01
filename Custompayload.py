@@ -65,6 +65,6 @@ class CustomPayload:
 
 
 p = CustomPayload()
-# def send_message(senderId, res):
-#     return p.payloadManager(senderId, res)
-p.quick_reply("1233", ["I want to appply for", "I need to apply for"])
+def send_message(senderId, res):
+    return p.payloadManager(senderId, res)
+# p.quick_reply("1233", ["I want to appply for", "I need to apply for"])
