@@ -51,7 +51,7 @@ def fb_webhook():
                         else:
                             u_state = u_data["0"]
 
-                        u_state["user_text"] = authenticate_user(message_text)
+                        u_state["user_text"] = authenticate_user(u_data)
                         res = bot.run_bot(u_state)
                         upd_state(sender_id, res, u_data)
                         send_message(sender_id, res['response_text'])
