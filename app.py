@@ -6,6 +6,8 @@ from flask import Flask, request
 from chat_bot import CrmnextChatBot
 from storeState import state_mdb
 from user_data import UserStateData
+import Custompayload import send_message
+from skills_api import authenticate_user
 import json
 
 user_db = state_mdb()
@@ -40,6 +42,8 @@ def fb_webhook():
                         sender_id = msg["sender"]["id"]
                         message_text = msg["message"]["text"]
                         u_data = get_user_state()
+
+
                         print("user_state:" + str(u_data))
                         u_state = ''
                         if sender_id in u_data.keys():
@@ -47,7 +51,7 @@ def fb_webhook():
                         else:
                             u_state = u_data["0"]
 
-                        u_state["user_text"] = message_text
+                        u_state["user_text"] = authenticate_user(message_text)
                         res = bot.run_bot(u_state)
                         upd_state(sender_id, res, u_data)
                         send_message(sender_id, res['response_text'])
@@ -65,29 +69,29 @@ def v():
 
     return "Ready to Rock!", 200
 
-def send_message(recipient_id, message_text):
-    """
-    build response body to for the user id
-    :param recipient_id:
-    :param message_text:
-    :return:
-    """
-
-    params = {
-        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = json.dumps({
-        "recipient": {
-            "id": recipient_id
-        },
-        "message": {
-            "text": message_text
-        }
-    })
-    response = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+# def send_message(recipient_id, message_text):
+#     """
+#     build response body to for the user id
+#     :param recipient_id:
+#     :param message_text:
+#     :return:
+#     """
+#
+#     params = {
+#         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+#     }
+#     headers = {
+#         "Content-Type": "application/json"
+#     }
+#     data = json.dumps({
+#         "recipient": {
+#             "id": recipient_id
+#         },
+#         "message": {
+#             "text": message_text
+#         }
+#     })
+#     response = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 
 def get_user_state():
 
@@ -115,5 +119,4 @@ def upd_state(id, res, last_state):
         update_user_data({"user_data":[last_state]})
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    fb_webhook()
+    app.run(debug=True)
