@@ -151,7 +151,7 @@ class CrmnextChatBot:
         :return:
         """
         neg_data = cr_data["neg_sent"][0]
-        return dict(user_intent="", response_text=random.choice(neg_data["response"]),user_stage=0)
+        return dict(user_intent="", response_text=random.choice(neg_data["response"]),user_stage=0, card_type='')
 
     def sent(self, conv):
         """
