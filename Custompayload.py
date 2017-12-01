@@ -9,8 +9,8 @@ class CustomPayload:
         pass
 
     def quick_reply(self,senderId, res):
-        botRes ="Avi hi" #res["response_text"]
-        listOfReply = res #res["recommendation"]
+        botRes = res["response_text"]
+        listOfReply = res["recommendation"]
         quickReply = []
 
 
