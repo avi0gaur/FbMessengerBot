@@ -41,6 +41,7 @@ def fb_webhook():
                 if msg.get("message"):
                         sender_id = msg["sender"]["id"]
                         message_text = msg["message"]["text"]
+                        #get last status of the user
                         u_data = get_user_state()
                         print("user_state:" + str(u_data))
                         u_state = ''
@@ -51,6 +52,7 @@ def fb_webhook():
                         else:
                             u_state = u_data["0"]
 
+                        #Check to execute skills
                         u_state["user_text"] = authenticate_user(u_state, message_text)
                         res = bot.run_bot(u_state)
                         upd_state(sender_id, res, u_data)
@@ -69,29 +71,6 @@ def v():
 
     return "Ready to Rock!", 200
 
-# def send_message(recipient_id, message_text):
-#     """
-#     build response body to for the user id
-#     :param recipient_id:
-#     :param message_text:
-#     :return:
-#     """
-#
-#     params = {
-#         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
-#     }
-#     headers = {
-#         "Content-Type": "application/json"
-#     }
-#     data = json.dumps({
-#         "recipient": {
-#             "id": recipient_id
-#         },
-#         "message": {
-#             "text": message_text
-#         }
-#     })
-#     response = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 
 def get_user_state():
 
