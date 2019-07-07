@@ -12,7 +12,7 @@ class state_mdb:
     def __init__(self):
 
         try:
-            client = MongoClient("mongodb://:@ds027295.mlab.com:27295/chatbot")
+            client = MongoClient("mongodb://:<username:password>/chatbot")
 
             self.db = client.chatbot
         except Exception as ex:
