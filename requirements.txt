@@ -30,6 +30,6 @@ termcolor==1.1.0
 textblob==0.13.0
 toolz==0.8.2
 tqdm==4.17.1
-urllib3==1.22
+urllib3==1.26.5
 vaderSentiment==2.5
 wrapt==1.10.11
