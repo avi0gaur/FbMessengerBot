@@ -14,7 +14,7 @@ grpcio-tools==1.4.0
 idna==2.6
 murmurhash==0.26.4
 nltk==3.2.4
-numpy==1.13.1
+numpy==1.22.0
 pandas==0.20.3
 pathlib==1.0.1
 preshed==1.0.0
